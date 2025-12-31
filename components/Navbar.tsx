@@ -9,7 +9,6 @@ const Navbar = () => {
                     <Image src="/icons/logo.png" alt="logo" width={24} height={24} />
                     <p>OUREVENTS</p>
                 </Link>
-
                 <ul className="text-white hover:underline">
                     <Link href="/">Home</Link>
                     <Link href="/">Events</Link>
