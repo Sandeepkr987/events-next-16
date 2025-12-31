@@ -31,11 +31,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 PostHog-> next.js open source product analytics platform/engine
 1. Event analytics (track clicks, page views, custom events)
-2. User behavior & funnels
+2. automatic Track User behavior & funnels
 3. Session recording / heatmaps (optional)
 4. Feature flags, experiments
 5. Product insights (retention, cohorts)
-To replace Visualize it with Chart.js / Highcharts / Flexmonster + Store/collect events with Umami/Ackee/Plausible.
+6. monitor errors in real time
+To replace posthog-
+-Visualize it with Chart.js / Highcharts / Flexmonster + Store/collect events with Umami/Ackee/Plausible.
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
