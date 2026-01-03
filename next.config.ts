@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   // Add your configuration options here
   reactStrictMode: true, // This is a common default option
 
-  // PostHog rewrites
   async rewrites() {
     return [
       {
