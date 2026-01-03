@@ -1,9 +1,18 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Add your configuration options here
+  cacheComponents: true,
   reactStrictMode: true, // This is a common default option
-
+  //cloudinary img upload feature 
+  // error:
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com'
+      }, 
+    ]
+  },
   async rewrites() {
     return [
       {
