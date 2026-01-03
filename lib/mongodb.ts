@@ -36,7 +36,7 @@ async function connectDB(): Promise<typeof mongoose> {
       );
     }
     const options = {
-      bufferCommands: false, // Disable Mongoose buffering
+      bufferCommands: false, // Disable Mongoose buffering`
     };
 
     // Create a new connection promise
