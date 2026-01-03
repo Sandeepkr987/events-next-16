@@ -4,8 +4,7 @@ import Image from "next/image";
 import {getSimilarEventsBySlug} from '@/lib/actions/event.actions'
 import BookEvent from '@/components/BookEvent';
 import EventCard from "@/components/EventCard";
-import {cacheLife} from "next/cache";
-
+import {cacheLife} from 'next/cache'
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 //event components
@@ -32,18 +31,40 @@ const EventTags = ({ tags }: { tags: string[] }) => (
         ))}
     </div>
 )
-const EventDetails = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = await params
+const EventDetails = async ({
+  params,
+}: {
+  params: { slug: string };
+}) => {
+  'use cache'
+  cacheLife('hours');
+  const { slug } = params;
+  let event;
+    try {
+        const request = await fetch(`${BASE_URL}/api/events/${slug}`, {
+            next: { revalidate: 60 }
+        });
 
-  const request = await fetch(`${BASE_URL}/api/events/${slug}`)
-  const {event: {
-    description, image, 
-    overview, date, time, 
-    agenda, audience, tags, 
-    location, mode, organizer
-  }} = await request.json()
+        if (!request.ok) {
+            if (request.status === 404) {
+                return notFound();
+            }
+            throw new Error(`Failed to fetch event: ${request.statusText}`);
+        }
 
-  if(!description ) return notFound()
+        const response = await request.json();
+        event = response.event;
+
+        if (!event) {
+            return notFound();
+        }
+    } catch (error) {
+        console.error('Error fetching event:', error);
+        return notFound();
+    }
+
+    const { description, image, overview, date, time, location, mode, agenda, audience, tags, organizer } = event;
+    if(!description) return notFound();
       const bookings = 10;
 
       const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
@@ -97,7 +118,7 @@ const EventDetails = async ({ params }: { params: { slug: string } }) => {
                             <p className="text-sm">Be the first to book your spot!</p>
                         )}
 
-                        <BookEvent eventId={event._id} slug={event.slug} />
+                        <BookEvent eventId={event._id.toString()} slug={event.slug} />
                     </div>
                 </aside>
             </div>
